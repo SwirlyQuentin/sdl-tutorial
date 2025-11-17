@@ -13,6 +13,7 @@ cpp_file_path = f"{folder}/main.cpp"
 os.makedirs(folder, exist_ok=True)
 
 lesson_cpp_template = f"""#include <iostream>
+#include <SDL2/SDL.h>
 using namespace std;
 
 int run_{lesson_name}(int argc, char* args[]) {{

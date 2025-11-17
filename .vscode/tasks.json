@@ -9,6 +9,7 @@
                 "main.cpp",
                 "lessons/Lesson1_HelloSDL/main.cpp",
                 "lessons/Lesson2_Images/main.cpp",
+                "lessons/Lesson3_EventDriving/main.cpp",
                 "-o",
                 "sdl_app",
                 "-lmingw32",

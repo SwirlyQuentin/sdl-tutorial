@@ -9,6 +9,7 @@ using namespace std;
 // LESSON_INCLUDES_START
 #include "lessons/Lesson1_HelloSDL/main.h"
 #include "lessons/Lesson2_Images/main.h"
+#include "lessons/Lesson3_EventDriving/main.h"
 // LESSON_INCLUDES_END
 // ----- END AUTO GENERATED INCLUDES -----
 
@@ -33,6 +34,9 @@ int main (int argc, char* args[]){
         }
         if (lessonName == "Lesson2_Images") {
             lessonFunctions.push_back(run_Lesson2_Images);
+        }
+        if (lessonName == "Lesson3_EventDriving") {
+            lessonFunctions.push_back(run_Lesson3_EventDriving);
         }
         // LESSON_MAPS_END
         // --- END AUTO GENERATED FUNCTION MAPPING ---
