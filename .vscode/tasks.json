@@ -7,7 +7,10 @@
             "command": "C:/msys64/ucrt64/bin/g++.exe",
             "args": [
                 "main.cpp",
-                "-o", "sdl_app",
+                "lessons/Lesson1_HelloSDL/main.cpp",
+                "lessons/Lesson2_Images/main.cpp",
+                "-o",
+                "sdl_app",
                 "-lmingw32",
                 "-lSDL2main",
                 "-lSDL2"

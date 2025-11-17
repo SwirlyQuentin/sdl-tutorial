@@ -1,69 +1,69 @@
-#include <SDL2/SDL.h>
 #include <iostream>
+#include <vector>
+#include <fstream>
+#include <string>
+using namespace std;
 
 
-//Screen dimemnsion constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+// ----- AUTO GENERATED INCLUDES -----
+// LESSON_INCLUDES_START
+#include "lessons/Lesson1_HelloSDL/main.h"
+#include "lessons/Lesson2_Images/main.h"
+// LESSON_INCLUDES_END
+// ----- END AUTO GENERATED INCLUDES -----
 
 
-int main(int argc, char* args[]) {
+using LessonFunc = int (*)(int, char**);
+vector<string> lessonNames;
+vector<LessonFunc> lessonFunctions;
 
-    //Window that we render to
-    SDL_Window* window = NULL;
+int main (int argc, char* args[]){
 
-    //Surface that is contained by the window
-    SDL_Surface* screenSurface = NULL;
+    ifstream lessonIndex("lessons_index.txt");
 
-    //Initializing SDL
-    // Required for SDL functions to work
-    //only initializing SDL video subsystem for now
-    //SDL returns -1 if error
-    if (SDL_Init(SDL_INIT_VIDEO) <0 ){
-        std::cout << "SDL could not initialize, ERROR: " << SDL_GetError();
-        return 1;
-    }
-    else{
-        //create the window
-        window = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-        if (window == NULL){
-            std::cout << "Window could not be created: " << SDL_GetError();
-            return 1;
+    string lessonName;
+    while (getline(lessonIndex, lessonName))
+    {
+        lessonNames.push_back(lessonName);
+
+        // --- AUTO GENERATED FUNCTION MAPPING ---
+        // LESSON_MAPS_START
+        if (lessonName == "Lesson1_HelloSDL") {
+            lessonFunctions.push_back(run_Lesson1_HelloSDL);
         }
-        else{
-            //GEtting window surface
-            screenSurface = SDL_GetWindowSurface(window);
-
-            //Filling it with white
-            SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface -> format, 0xFF, 0xFF, 0xFF));
-
-            //updating window surface
-            //AFTER DRAWING NEED TO UPDATE **
-            SDL_UpdateWindowSurface(window);
-
-            //getting window to stay up
-            // HACK NOT USED LATER ON
-            SDL_Event e;
-            bool quit = false;
-            while (quit == false)
-            {
-                while (SDL_PollEvent(&e))
-                {
-                    if (e.type == SDL_QUIT){
-                        quit = true;
-                    }
-                }
-                
-            }
-            
-            //Destroying window and quitting sdl
-            SDL_DestroyWindow(window);
-            SDL_Quit();
-            return 0;
-
+        if (lessonName == "Lesson2_Images") {
+            lessonFunctions.push_back(run_Lesson2_Images);
         }
+        // LESSON_MAPS_END
+        // --- END AUTO GENERATED FUNCTION MAPPING ---
     }
 
+    while (true)
+    {
+        cout << "\n\n ===== Lessons =====\n";
+        for (int i = 0; i < lessonNames.size(); i++){
+            cout << i + 1 << ". " << lessonNames[i] << endl;
+        }
+        cout << "0. Quit\n";
+        cout << "\nEnter Lesson Number: ";
+        int c;
+        cin >> c;
+
+        if (c == 0){
+            break;
+        }
+        if (c < 1 || c > lessonNames.size()){
+            continue;
+        }
+
+        lessonFunctions[c - 1](argc, args);
+    }
+    
+    
 
 
+
+
+
+    return 0;
 }
