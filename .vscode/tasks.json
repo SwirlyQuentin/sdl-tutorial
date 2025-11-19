@@ -10,6 +10,8 @@
                 "lessons/Lesson1_HelloSDL/main.cpp",
                 "lessons/Lesson2_Images/main.cpp",
                 "lessons/Lesson3_EventDriving/main.cpp",
+                "lessons/Lesson4_KeyPresses/main.cpp",
+                "lessons/Lesson5_OptimizeSurfaceLoad_SoftStreaching/main.cpp",
                 "-o",
                 "sdl_app",
                 "-lmingw32",

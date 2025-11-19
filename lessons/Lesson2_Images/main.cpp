@@ -1,113 +1,116 @@
 #include <SDL2/SDL.h>
 #include <iostream>
-using namespace std;
 
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+namespace Lesson2_Images{
+    using namespace std;
 
-//Starts up SDL and creates window
-bool init();
+    const int SCREEN_WIDTH = 640;
+    const int SCREEN_HEIGHT = 480;
 
-//loads media
-bool loadMedia();
+    //Starts up SDL and creates window
+    bool init();
 
-//Frees media and shuts down SDL
-void close();
+    //loads media
+    bool loadMedia();
 
-//Rendering window
-SDL_Window* gWindow = NULL;
+    //Frees media and shuts down SDL
+    void close();
 
-//Window surface
-// SURFACES are image data types that render pixels to the screen this uses CPU TO RENDER
-SDL_Surface* gScreenSurface = NULL;
+    //Rendering window
+    SDL_Window* gWindow = NULL;
 
-//Image that we load and show on the screen
-SDL_Surface* gHelloWorld = NULL;
+    //Window surface
+    // SURFACES are image data types that render pixels to the screen this uses CPU TO RENDER
+    SDL_Surface* gScreenSurface = NULL;
 
-int run_Lesson2_Images(int argc, char* args[]) {
-    if (!init()){
-        cout << "Failed to initialize";
-    }
-    else{
-        if (!loadMedia()){
-            cout << "Failed to load media";
+    //Image that we load and show on the screen
+    SDL_Surface* gHelloWorld = NULL;
+
+    int run_Lesson2_Images(int argc, char* args[]) {
+        if (!init()){
+            cout << "Failed to initialize";
         }
         else{
-            //Copying image from surface 1(laoded image) tp surface 3 (window surafce)
-            SDL_BlitSurface(gHelloWorld, NULL, gScreenSurface, NULL);
+            if (!loadMedia()){
+                cout << "Failed to load media";
+            }
+            else{
+                //Copying image from surface 1(laoded image) tp surface 3 (window surafce)
+                SDL_BlitSurface(gHelloWorld, NULL, gScreenSurface, NULL);
 
-            //updating window surafce
-            SDL_UpdateWindowSurface(gWindow);
+                //updating window surafce
+                SDL_UpdateWindowSurface(gWindow);
 
-            //window hack
-            SDL_Event e;
-            bool quit = false;
-            while (quit == false)
-            {
-                while (SDL_PollEvent(&e))
+                //window hack
+                SDL_Event e;
+                bool quit = false;
+                while (quit == false)
                 {
-                    if (e.type == SDL_QUIT){
-                        quit = true;
+                    while (SDL_PollEvent(&e))
+                    {
+                        if (e.type == SDL_QUIT){
+                            quit = true;
+                        }
                     }
+                    
                 }
-                
             }
         }
+        
+        //free resources and close
+        close();
+        return 0;
     }
-    
-    //free resources and close
-    close();
-    return 0;
-}
 
 
-bool init(){
-    // INIT flag
-    bool success = true;
-    //Initialize SDL
-    if (SDL_Init(SDL_INIT_VIDEO) < 0){
-        cout << "Could not be initialized erorr: " << SDL_GetError();
-        success = false;
-    }
-    else{
-        //create window
-        gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-        if (gWindow == NULL){
-            cout << "Window could not be created, Error: " << SDL_GetError();
+    bool init(){
+        // INIT flag
+        bool success = true;
+        //Initialize SDL
+        if (SDL_Init(SDL_INIT_VIDEO) < 0){
+            cout << "Could not be initialized erorr: " << SDL_GetError();
             success = false;
         }
         else{
-            gScreenSurface = SDL_GetWindowSurface(gWindow);
+            //create window
+            gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+            if (gWindow == NULL){
+                cout << "Window could not be created, Error: " << SDL_GetError();
+                success = false;
+            }
+            else{
+                gScreenSurface = SDL_GetWindowSurface(gWindow);
+            }
         }
+        return success;
     }
-    return success;
-}
 
 
 
-bool loadMedia(){
-    //flag
-    bool success = true;
+    bool loadMedia(){
+        //flag
+        bool success = true;
 
-    //load splash image
-    gHelloWorld = SDL_LoadBMP("lessons/Lesson2_Images/hello_world.bmp");
-    if (gHelloWorld == NULL){
-        cout << "Unable to load image hello_world.bmp, Error: " << SDL_GetError();
-        success = false;
+        //load splash image
+        gHelloWorld = SDL_LoadBMP("lessons/Lesson2_Images/hello_world.bmp");
+        if (gHelloWorld == NULL){
+            cout << "Unable to load image hello_world.bmp, Error: " << SDL_GetError();
+            success = false;
+        }
+        return success;
+
     }
-    return success;
 
-}
+    void close(){
+        //Deallocate Surface
+        SDL_FreeSurface(gHelloWorld);
+        gHelloWorld = NULL;
 
-void close(){
-    //Deallocate Surface
-    SDL_FreeSurface(gHelloWorld);
-    gHelloWorld = NULL;
+        //Destroy Window
+        SDL_DestroyWindow(gWindow);
+        gWindow = NULL;
 
-    //Destroy Window
-    SDL_DestroyWindow(gWindow);
-    gWindow = NULL;
-
-    //Quit systems
-    SDL_Quit();
+        //Quit systems
+        SDL_Quit();
+    }
 }

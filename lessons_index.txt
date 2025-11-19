@@ -1,3 +1,5 @@
 Lesson1_HelloSDL
 Lesson2_Images
 Lesson3_EventDriving
+Lesson4_KeyPresses
+Lesson5_OptimizeSurfaceLoad_SoftStreaching

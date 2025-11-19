@@ -14,18 +14,22 @@ os.makedirs(folder, exist_ok=True)
 
 lesson_cpp_template = f"""#include <iostream>
 #include <SDL2/SDL.h>
+namespace {lesson_name}{{
 using namespace std;
 
-int run_{lesson_name}(int argc, char* args[]) {{
-    cout << "Running lesson: {lesson_name}..." << endl;
-    // TODO: add SDL code
-    return 0;
+    int run_{lesson_name}(int argc, char* args[]) {{
+        cout << "Running lesson: {lesson_name}..." << endl;
+        // TODO: add SDL code
+        return 0;
+    }}
 }}
 """
 
 header_template = f"""#pragma once
 
+namespace {lesson_name}{{
 int run_{lesson_name}(int argc, char* args[]);
+}}
 """
 
 with open(header_path, "w") as f:
@@ -45,7 +49,7 @@ with open("main.cpp", "r") as f:
 
 include_line = f'#include "lessons/{lesson_name}/main.h"\n'
 map_line = f'''        if (lessonName == "{lesson_name}") {{
-            lessonFunctions.push_back(run_{lesson_name});
+            lessonFunctions.push_back({lesson_name}::run_{lesson_name});
         }}
 '''
 

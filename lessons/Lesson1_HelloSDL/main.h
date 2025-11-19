@@ -1,3 +1,4 @@
 #pragma once
-
-int run_Lesson1_HelloSDL(int argc, char* args[]);
+namespace Lesson1_HelloSDL{
+    int run_Lesson1_HelloSDL(int argc, char* args[]);
+}
